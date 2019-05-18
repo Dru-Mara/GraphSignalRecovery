@@ -1,0 +1,110 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.slp</groupId>
+  <artifactId>SparseLabelPropagation</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>${project.artifactId}</name>
+  <description>My wonderfull scala app</description>
+  <inceptionYear>2010</inceptionYear>
+  <licenses>
+    <license>
+      <name>My License</name>
+      <url>http://....</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <properties>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+    <encoding>UTF-8</encoding>
+    <scala.tools.version>2.10</scala.tools.version>
+    <scala.version>2.10.6</scala.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    
+    <!-- Scala and Spark dependencies -->
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-core_2.10</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+		<!-- GraphX dependancy -->
+		<dependency>
+    		<groupId>org.apache.spark</groupId>
+    		<artifactId>spark-graphx_2.10</artifactId>
+    		<version>2.0.1</version>
+		</dependency>
+		
+		<!-- SparkSQL dependancy -->
+	    <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-sql_2.10</artifactId>
+          <version>1.6.1</version>
+        </dependency>
+
+        <!-- Apache Hive dependancy -->    
+        <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-hive_2.10</artifactId>
+          <version>1.6.1</version>
+        </dependency>
+        
+        <!-- MLlib dependancy -->
+        <dependency>
+          <groupId>org.apache.spark</groupId>
+          <artifactId>spark-mllib_2.10</artifactId>
+          <version>2.1.0</version>
+        </dependency>
+
+  </dependencies>
+
+  <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+    <plugins>
+      <plugin>
+        <!-- see http://davidb.github.com/scala-maven-plugin -->
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.1.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <args>
+                <arg>-make:transitive</arg>
+                <arg>-dependencyfile</arg>
+                <arg>${project.build.directory}/.scala_dependencies</arg>
+              </args>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.13</version>
+        <configuration>
+          <useFile>false</useFile>
+          <disableXmlReport>true</disableXmlReport>
+          <!-- If you have classpath issue like NoDefClassError,... -->
+          <!-- useManifestOnlyJar>false</useManifestOnlyJar -->
+          <includes>
+            <include>**/*Test.*</include>
+            <include>**/*Suite.*</include>
+          </includes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
